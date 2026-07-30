@@ -1,0 +1,50 @@
+# systemd unit for the netlapse collector + API.
+#
+#   sudo cp deploy/netlapse.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now netlapse
+#   journalctl -u netlapse -f          # watch collectors record snapshots
+#
+# Assumes the binary at /opt/netlapse/netlapse-server and a `netlapse` user:
+#   sudo useradd --system --home /opt/netlapse --shell /usr/sbin/nologin netlapse
+
+[Unit]
+Description=netlapse — internet history collector and API
+Documentation=https://github.com/BitByBit-101/netlapse
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=netlapse
+Group=netlapse
+WorkingDirectory=/opt/netlapse
+ExecStart=/opt/netlapse/netlapse-server
+
+# Bind to loopback only — nginx is the public entry point and terminates TLS.
+Environment=NC_ADDR=127.0.0.1:8080
+Environment=NC_DB_PATH=/var/lib/netlapse/netlapse.db
+Environment=NC_LATENCY_INTERVAL=30s
+Environment=NC_DNS_INTERVAL=10m
+
+# Creates and chowns /var/lib/netlapse automatically on start.
+StateDirectory=netlapse
+
+Restart=always
+RestartSec=5s
+
+# Hardening. The collectors need outbound DNS/HTTPS and the traceroute binary,
+# nothing more: no raw sockets (latency uses a TCP handshake, not ICMP), no
+# writes outside the state directory.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
