@@ -1,0 +1,57 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: netlapse-backend:latest
+    container_name: netlapse-backend
+    restart: unless-stopped
+    environment:
+      NC_DB_PATH: /data/netlapse.db
+      NC_ADDR: ":8080"
+      # Collector intervals. Defaults are in backend/cmd/server/main.go; these
+      # are written out so they are visible and easy to tune.
+      NC_DNS_INTERVAL: 10m
+      NC_LATENCY_INTERVAL: 30s
+      NC_CDN_INTERVAL: 15m
+      NC_ASN_INTERVAL: 30m
+      NC_TLS_INTERVAL: 30m
+      NC_ROUTE_INTERVAL: 6h
+      NC_HEALTH_INTERVAL: 2m
+      # Optional LLM narrative for the Investigator tab. See the "Optional
+      # local LLM" section of the README before turning this on.
+      NC_LLM_ENABLED: "false"
+    volumes:
+      # Named volume, so the collected history survives rebuilds and
+      # `docker compose down`. Only `down -v` deletes it.
+      - netlapse-data:/data
+    # Not published to the host by default: nginx reaches it over the compose
+    # network. Uncomment to hit the API directly while debugging.
+    # ports:
+    #   - "8080:8080"
+    networks:
+      - netlapse
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Empty means the bundle requests relative /api/... paths, which nginx
+        # proxies to the backend. Do not set this to http://localhost:8080 —
+        # that address is resolved by the *browser*, not the container.
+        VITE_API_URL: ""
+    image: netlapse-frontend:latest
+    container_name: netlapse-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - netlapse
+
+volumes:
+  netlapse-data:
+
+networks:
+  netlapse:
+    driver: bridge

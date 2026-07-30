@@ -1,0 +1,7 @@
+*.db
+*.db-wal
+*.db-shm
+netlapse
+netlapse-server
+Dockerfile
+.dockerignore
