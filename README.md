@@ -58,10 +58,10 @@ video. That's the entire pitch. 🎬
     <td width="33%"><img src="docs/screenshots/03.png" alt="Cross-signal timeline" /></td>
   </tr>
   <tr>
-    <td colspan="3"><img src="docs/screenshots/04.png" alt="netlapse dashboard" /></td>
+    <td colspan="3"><img src="docs/screenshots/04.png" alt="The netlapse landing page" /></td>
   </tr>
   <tr>
-    <td width="33%"><img src="docs/screenshots/05.png" alt="Diff two moments" /></td>
+    <td width="33%"><img src="docs/screenshots/05.png" alt="IP ownership history" /></td>
     <td width="33%"><img src="docs/screenshots/06.png" alt="3D traceroute" /></td>
     <td width="33%"><img src="docs/screenshots/07.png" alt="Availability heatmap" /></td>
   </tr>

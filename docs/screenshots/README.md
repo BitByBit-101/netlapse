@@ -1,8 +1,8 @@
 # Screenshots
 
-Drop seven PNGs here using these **exact** filenames. The main
-[README](../../README.md#-gallery) references them directly, so the gallery
-works as soon as the files exist — no other edits needed.
+The seven PNGs the main [README](../../README.md#-gallery) gallery references.
+Replacing one is just a matter of overwriting the file — the filenames are
+fixed, so no README edit is needed.
 
 The layout is a 3 × 1 × 3 grid, so **`04.png` is displayed at full width** while
 the other six render at roughly a third each:
@@ -17,15 +17,15 @@ the other six render at roughly a third each:
 └─────────┴─────────┴─────────┘
 ```
 
-| File | Suggested shot | Where |
+| File | Shows | Where |
 |:--|:--|:--|
-| `01.png` | Latency chart with the 1h / 24h / 7d buttons visible | `#/app` → **Latency** |
-| `02.png` | DNS timeline showing a record rotation | `#/app` → **DNS** |
-| `03.png` | Cross-signal chronological history | `#/app` → **Timeline** |
-| `04.png` | **Wide.** The landing hero, or the dashboard at full width | `/` |
-| `05.png` | A diff with changed fields showing | `#/app` → **Diff** |
-| `06.png` | The 3D traceroute at a readable angle | `#/app` → **Twin** |
-| `07.png` | The seven-day availability heatmap | `#/app` → **Weather** |
+| `01.png` | Latency over 24h, with the 1h / 24h / 7d range buttons | `#/app` → **Latency** |
+| `02.png` | DNS timeline, amber highlights marking changed records | `#/app` → **DNS** |
+| `03.png` | Cross-signal history — DNS rotations beside BGP events | `#/app` → **Timeline** |
+| `04.png` | **Wide.** The landing hero and the snake game | `/` |
+| `05.png` | IP ownership history, ASN and country per snapshot | `#/app` → **ASN** |
+| `06.png` | The traceroute in 3D, hops grouped into network lanes | `#/app` → **Twin** |
+| `07.png` | Seven-day availability heatmap | `#/app` → **Weather** |
 
 The middle image is the one people actually look at, so give it the most
 striking view. Everything else is a supporting thumbnail.
