@@ -102,8 +102,8 @@ in, so nothing to do. macOS has `traceroute` built in. On Ubuntu or Debian run
 **Step 1 — get the code**
 
 ```bash
-git clone https://github.com/BitByBit-101/netlapse.git
-cd netlapse
+git clone https://github.com/BitByBit-101/netLapse.git
+cd netLapse
 ```
 
 **Step 2 — start the backend**
