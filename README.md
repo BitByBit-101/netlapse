@@ -10,6 +10,10 @@ scroll back through, like rewinding a video.
 No account. No API keys. No cloud service. Everything is stored in a single
 file on your own computer.
 
+**Live demo → [netlapse.duckdns.org](https://netlapse.duckdns.org)** — a real
+instance running on AWS, recording four sites right now. Nothing to install.
+
+[![Live demo](https://img.shields.io/badge/live_demo-netlapse.duckdns.org-22C55E?logo=amazonec2&logoColor=white)](https://netlapse.duckdns.org)
 ![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go&logoColor=white)
 ![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
@@ -21,16 +25,17 @@ file on your own computer.
 ## Contents
 
 1. [The problem it solves](#the-problem-it-solves)
-2. [Screenshots](#screenshots)
-3. [Setup guide](#setup-guide)
-4. [How to use it](#how-to-use-it)
-5. [What it records](#what-it-records)
-6. [The dashboard views](#the-dashboard-views)
-7. [Configuration](#configuration)
-8. [Deploying to a server](#deploying-to-a-server)
-9. [The API](#the-api)
-10. [How it is built](#how-it-is-built)
-11. [Troubleshooting](#troubleshooting)
+2. [The live demo](#the-live-demo)
+3. [Screenshots](#screenshots)
+4. [Setup guide](#setup-guide)
+5. [How to use it](#how-to-use-it)
+6. [What it records](#what-it-records)
+7. [The dashboard views](#the-dashboard-views)
+8. [Configuration](#configuration)
+9. [Deploying to a server](#deploying-to-a-server)
+10. [The API](#the-api)
+11. [How it is built](#how-it-is-built)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -54,6 +59,38 @@ keeps it:
 ```
 
 Leave it running for a week, then scrub back through the whole thing.
+
+---
+
+## The live demo
+
+**[netlapse.duckdns.org](https://netlapse.duckdns.org)**
+
+If you would rather look before you install, there is a real instance running.
+It lives on an AWS EC2 box behind nginx, with HTTPS from Let's Encrypt, and a
+DuckDNS subdomain pointing at it. It is the same code as this repository, no
+demo mode and no seeded data.
+
+It records `google.com`, `github.com`, `cloudflare.com` and `netflix.com`
+around the clock, so there is real history in it rather than an empty shell.
+Worth opening:
+
+| Try this | What you will see |
+|:--|:--|
+| **DNS** on `google.com` | Over a hundred real address rotations, changed records highlighted |
+| **Timeline** on `google.com` | Those rotations lined up against BGP announcements and TLS |
+| **BGP** on `google.com` | Origin announcements worked out from ASN snapshots alone |
+| **Latency** → 24h | Thousands of real measurements, taken every 30 seconds |
+| **Replay** | Scrub or auto-play back through the recorded history |
+| **Twin** | The traceroute from the demo server, drawn in 3D and grouped by network |
+
+It is deployed with the same `deploy/` scripts documented in
+[Deploying to a server](#deploying-to-a-server) — `build-bundle.sh`,
+`provision.sh`, then `setup-domain.sh` for the certificate.
+
+> It is a small free-tier instance, and the API is open with no authentication
+> because it is only ever meant to show you what the tool does. Run your own
+> copy if you want to track your own domains.
 
 ---
 
@@ -323,6 +360,10 @@ sudo bash setup-domain.sh your-domain.com you@example.com
 This checks your DNS really points at the server *before* requesting a
 certificate, so you don't waste one of Let's Encrypt's five weekly attempts. Add
 `--staging` to rehearse it first.
+
+These three steps are exactly how [netlapse.duckdns.org](https://netlapse.duckdns.org)
+is running — an EC2 instance, a free DuckDNS subdomain, and a Let's Encrypt
+certificate that renews itself.
 
 **Step 4 — close SSH (optional):**
 
